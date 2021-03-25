@@ -17,17 +17,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         DBManager.initDB(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        初始化控件
-        ininView();
-}
-    private void ininView(){
+
         loginButton = findViewById(R.id.login_btn);
         registerButton = findViewById(R.id.register_btn);
-
-
         loginButton.setOnClickListener(this);
         registerButton.setOnClickListener(this);
-    }
+//        初始化控件
+
+}
 
     @Override
     public void onClick(View v) {

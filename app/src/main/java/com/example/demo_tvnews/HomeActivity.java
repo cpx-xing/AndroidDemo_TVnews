@@ -62,6 +62,26 @@ public class HomeActivity extends AppCompatActivity {
             public void onTabReselect(int position) {
             }
         });
+
+//        预加载
+        viewPager.setOffscreenPageLimit(mFragments.size());
+//        随着viewpaper的滑动，底部的菜单按钮也随之变动
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                commonTabLayout.setCurrentTab(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager(),mTitles,mFragments));
 
     }
