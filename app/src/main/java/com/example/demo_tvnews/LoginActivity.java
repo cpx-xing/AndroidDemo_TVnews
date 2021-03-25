@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.demo_tvnews.api.ApiConfig;
 import com.example.demo_tvnews.db.DBManager;
 
 import org.json.JSONObject;
@@ -40,20 +41,59 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ininView();
+
     }
 
     private void ininView() {
         logingAccount = findViewById(R.id.login_account);
         loginPwd = findViewById(R.id.loging_pwd);
         loginButton = findViewById(R.id.login_button);
-
         loginButton.setOnClickListener(this);
+        sp = getSharedPreferences("info", Context.MODE_PRIVATE);
+
+//        获取本地的sharePreferences，如果存在则填写到文本框中
+        logingAccount.setText(sp.getString("username",""));
+        loginPwd.setText(sp.getString("userpwd",""));
+
+
+
     }
 
     @Override
     public void onClick(View v) {
         String account = logingAccount.getText().toString().trim();
         String pwd = loginPwd.getText().toString().trim();
+
+
+//        创建OKHttpClient
+        OkHttpClient client = new OkHttpClient.Builder().build();
+        Map map = new HashMap();
+        map.put("mobile",account);
+        map.put("password",pwd);
+        JSONObject jsonObject = new JSONObject(map);
+        String jsonStr = jsonObject.toString();
+        RequestBody requestBodyJson = RequestBody.create(MediaType.parse("application/json;charset=utf-8"),jsonStr);
+        Request request = new Request.Builder()
+                .url(ApiConfig.BASE_URL + ApiConfig.Login)
+                .addHeader("contentType","application/json;charset=utf-8")
+                .post(requestBodyJson)
+                .build();
+        final  Call call =client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("ONFAILURE","-----------------------------");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+//                login(account, pwd);
+                String string = response.body().string();
+                Log.e("onResponse",string);
+            }
+        });
+
+
         login(account, pwd);
     }
 
@@ -68,7 +108,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
         if(DBManager.checkUser(account,pwd)){
             showToast("登录成功");
-            sp = getSharedPreferences("info", Context.MODE_PRIVATE);
+
             SharedPreferences.Editor editor = sp.edit();
             editor.putString("username",account);
             editor.putString("userpwd",pwd);
@@ -79,4 +119,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             showToast("账号或密码错误");
         }
     }
+
+
+
+
 }
