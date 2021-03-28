@@ -57,7 +57,11 @@ public class HomeFragment extends Fragment {
         for (String title : mTitles) {
             mFragments.add(ViewFragment.newInstance(title));
         }
+//        全加载
         viewPager.setOffscreenPageLimit(mFragments.size());
+
+
+
         viewPager.setAdapter(new HomePagerAdapter(getFragmentManager(),mTitles,mFragments));
         slidingTabLayout.setViewPager(viewPager);
     }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical"
+        android:background="@drawable/item_news_bg">
+
+        <TextView
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:id="@+id/item_news_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="news"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_image_bg"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/item_news_img"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:src="@drawable/img1"
+                android:scaleType="fitXY"/>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/item_news_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="作者"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/item_news_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2021年3月26日 20:40:40"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/black"/>
+
+        </RelativeLayout>
+
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

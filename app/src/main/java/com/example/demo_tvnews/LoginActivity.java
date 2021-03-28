@@ -65,33 +65,34 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         String pwd = loginPwd.getText().toString().trim();
 
 
-//        创建OKHttpClient
-        OkHttpClient client = new OkHttpClient.Builder().build();
-        Map map = new HashMap();
-        map.put("mobile",account);
-        map.put("password",pwd);
-        JSONObject jsonObject = new JSONObject(map);
-        String jsonStr = jsonObject.toString();
-        RequestBody requestBodyJson = RequestBody.create(MediaType.parse("application/json;charset=utf-8"),jsonStr);
-        Request request = new Request.Builder()
-                .url(ApiConfig.BASE_URL + ApiConfig.Login)
-                .addHeader("contentType","application/json;charset=utf-8")
-                .post(requestBodyJson)
-                .build();
-        final  Call call =client.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e("ONFAILURE","-----------------------------");
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-//                login(account, pwd);
-                String string = response.body().string();
-                Log.e("onResponse",string);
-            }
-        });
+//        一下代码会使登录后退出
+////        创建OKHttpClient
+//        OkHttpClient client = new OkHttpClient.Builder().build();
+//        Map map = new HashMap();
+//        map.put("mobile",account);
+//        map.put("password",pwd);
+//        JSONObject jsonObject = new JSONObject(map);
+//        String jsonStr = jsonObject.toString();
+//        RequestBody requestBodyJson = RequestBody.create(MediaType.parse("application/json;charset=utf-8"),jsonStr);
+//        Request request = new Request.Builder()
+//                .url(ApiConfig.BASE_URL + ApiConfig.Login)
+//                .addHeader("contentType","application/json;charset=utf-8")
+//                .post(requestBodyJson)
+//                .build();
+//        final  Call call =client.newCall(request);
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                Log.e("ONFAILURE","-----------------------------");
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+////                login(account, pwd);
+//                String string = response.body().string();
+//                Log.e("onResponse",string);
+//            }
+//        });
 
 
         login(account, pwd);

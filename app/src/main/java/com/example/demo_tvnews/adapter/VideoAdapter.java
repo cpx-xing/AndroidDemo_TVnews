@@ -47,6 +47,7 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public int getItemCount() {
         return datas.size();
     }
+
     static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView tvTitle;
         private TextView tvAuthor;
