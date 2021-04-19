@@ -20,6 +20,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String sql = "create table login_user(_id integer primary key autoincrement,user_name varchar(20) unique not null,user_pwd varchar(20) unique not null)";
         db.execSQL(sql);
+        String sql2= "create table news_content(_id integer primary key autoincrement,news_name varchar(10) unique not null,news_content text unique not null)";
+        db.execSQL(sql2);
     }
 
     @Override

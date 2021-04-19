@@ -43,7 +43,7 @@ public class MyFragment extends Fragment {
             "热门","国内","国际","娱乐","体育","军事","科技","财经","时尚","游戏","汽车","健康"
     };
     private final String[] newTypeName = {
-         "top","guonei","guoji","yule","tiyu","jueshi","keji","caijing","shishang","youxi","qiche","jiankang"
+         "top","guonei","guoji","yule","tiyu","junshi","keji","caijing","shishang","youxi","qiche","jiankang"
     };
 
     private ViewPager newsViewPager;
@@ -75,45 +75,8 @@ public class MyFragment extends Fragment {
         for (String name : newTypeName){
             newsFragment.add(NewsFragment.newInstance(name));
         }
-
         newsViewPager.setOffscreenPageLimit(newsFragment.size());
-
         newsViewPager.setAdapter(new MyPagerAdapter(getFragmentManager(),newType,newsFragment));
         newsSlidingTabLayout.setViewPager(newsViewPager);
-
-
-//        OkHttpClient client = new OkHttpClient.Builder().build();
-//        Request request = new Request.Builder()
-//                .url("http://v.juhe.cn/toutiao/index?type=&page=&page_size=&key=ab26369c5f61027169bdd1bebb9727ef").get().build();
-//        Call call = client.newCall(request);
-//        call.enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//
-////                view1.setText(parseShowData(response).getTitle());
-//                String s = parseShowData(response).getTitle();
-//                Log.e("TITLE",s);
-//            }
-//        });
     }
-//
-//    //    使用gson解析数据
-//    public Newsbean.ResultDTO.DataDTO parseShowData(Response response) {
-//        Newsbean newsbean = null;
-//        Newsbean.ResultDTO.DataDTO dataDTO = null;
-//        try {
-//            newsbean = new Gson().fromJson(response.body().string(), Newsbean.class);
-//             dataDTO = newsbean.getResult().getData().get(0);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return dataDTO;
-//    }
-
-
 }

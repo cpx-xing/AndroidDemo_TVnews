@@ -52,7 +52,7 @@ public class ViewFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_view, container, false);
         smartRefreshLayout = view.findViewById(R.id.refreshLayout);
-        recyclerView= view.findViewById(R.id.recyclerView);
+        recyclerView = view.findViewById(R.id.recyclerView);
 
         return view;
     }
@@ -67,6 +67,7 @@ public class ViewFragment extends Fragment {
 //        smartRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
 //        smartRefreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
 
+//        添加刷新和加载
         smartRefreshLayout.setRefreshHeader(new FalsifyFooter(getContext()));
         smartRefreshLayout.setRefreshFooter(new FalsifyFooter(getContext()));
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -82,13 +83,17 @@ public class ViewFragment extends Fragment {
                 refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
             }
         });
+
+//      获取数据
         getList();
-        VideoAdapter adapter = new VideoAdapter(getActivity(),datas);
+//        添加适配器
+        VideoAdapter adapter = new VideoAdapter(getActivity(), datas);
         recyclerView.setAdapter(adapter);
     }
-    public void getList(){
-        for(int i = 0;i< 8;i++){
-            datas.add(new VideoEntity(i,"这是一条开心的狗狗","xing",i*2,i*2+3,i*2+4));
+
+    public void getList() {
+        for (int i = 0; i < 8; i++) {
+            datas.add(new VideoEntity(i, "这是一条开心的狗狗", "xing", i * 2, i * 2 + 3, i * 2 + 4));
         }
 
     }

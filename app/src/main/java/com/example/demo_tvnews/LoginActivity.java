@@ -54,9 +54,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //        获取本地的sharePreferences，如果存在则填写到文本框中
         logingAccount.setText(sp.getString("username",""));
         loginPwd.setText(sp.getString("userpwd",""));
-
-
-
     }
 
     @Override

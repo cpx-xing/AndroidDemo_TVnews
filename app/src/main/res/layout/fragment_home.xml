@@ -52,7 +52,6 @@
             tl:tl_textsize="16sp"
             tl:tl_indicator_color="#ffffff"
             tl:tl_indicator_width="17dp"/>
-
     </LinearLayout>
 
     <com.example.demo_tvnews.view.FixedViewPager

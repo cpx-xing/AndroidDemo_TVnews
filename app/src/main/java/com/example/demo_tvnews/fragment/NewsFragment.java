@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.example.demo_tvnews.R;
 import com.example.demo_tvnews.adapter.NewsAdapter;
+import com.example.demo_tvnews.db.DBManager;
+import com.example.demo_tvnews.db.NewsContentBean;
 import com.example.demo_tvnews.entity.NewsEntity;
 import com.example.demo_tvnews.news.Newsbean;
 import com.example.demo_tvnews.util.NewsUtils;
@@ -50,6 +52,8 @@ public class NewsFragment extends BaseFragment implements AdapterView.OnItemClic
     String defaultUrl = "https://desk-fd.zol-img.com.cn/t_s960x600c5/g5/M00/04/0A/ChMkJ1bWVkqIAOIIAATtjMLDO44AAMRawJxKN0ABO2k023.jpg";
     RecyclerView recyclerView;
     SmartRefreshLayout smartRefreshLayout;
+    private String reason = "超过每日可允许请求次数";
+    List<NewsEntity> list = new ArrayList<>();
 
     public NewsFragment() {
         // Required empty public constructor
@@ -93,16 +97,12 @@ public class NewsFragment extends BaseFragment implements AdapterView.OnItemClic
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-
-        List<NewsEntity> list = new ArrayList<>();
         String url = head + name + key;
-        Log.e("URL", url);
+//        Log.e("URL", url);
 
         OkHttpClient client = new OkHttpClient.Builder().build();
         Request request = new Request.Builder().url(url).get().build();
         Call call = client.newCall(request);
-
-
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -111,37 +111,41 @@ public class NewsFragment extends BaseFragment implements AdapterView.OnItemClic
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                try {
-                    Newsbean newsbean = new Gson().fromJson(response.body().string(), Newsbean.class);
-                    List<Newsbean.ResultDTO.DataDTO> data1 = newsbean.getResult().getData();
-                    for (int i = 0; i < data1.size(); i++) {
-                        list.add(new NewsEntity(i, data1.get(i).getTitle(), data1.get(i).getThumbnail_pic_s(), data1.get(i).getAuthor_name(), data1.get(i).getDate()));
-                    }
-                    saveStringNews(name, response.body().string());
-//                    保存数据
-                } catch (Exception e) {
-//                    离线数据
-                    String offline = getStringNews(name);
-                    try {
-                        Newsbean offlinenewsBean = new Gson().fromJson(offline, Newsbean.class);
-                        List<Newsbean.ResultDTO.DataDTO> data2 = offlinenewsBean.getResult().getData();
-                        for (int i = 0; i < data2.size(); i++) {
-                            list.add(new NewsEntity(i, data2.get(i).getTitle(), data2.get(i).getThumbnail_pic_s(), data2.get(i).getAuthor_name(), data2.get(i).getDate()));
-                        }
-                    } catch (Exception e1) {
-                        list.add(new NewsEntity(0, "超过每日可允许请求次数", defaultUrl, "温馨提示", new Date().toString()));
+                String result = response.body().string();
+//                Log.e("TAG", result);
+//                添加判断：如果取到了数据，保存到数据库中，未取到数据则跳过
+                Log.e("TAG",result.indexOf(reason)+"");
+                if (result.indexOf(reason) == -1) {
+                    NewsContentBean contentBean = new NewsContentBean(name, result);
+//                    如果数据库中有数据，则更新，没有则添加
+                    if (DBManager.isFirstData()) {
+                        DBManager.putNewsContent(contentBean);
+                    } else {
+//                  数据库中已经有数据了，需要操作更新
+                        DBManager.reflashNews(name, contentBean);
                     }
                 }
             }
         });
-        NewsAdapter adapter = new NewsAdapter(getActivity(), list);
-        recyclerView.setAdapter(adapter);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //        采用存储到数据库的方法--读取数据库中的数据
+        try {
+            String getNewsContent = DBManager.getNewsContent(name);
+            Newsbean newsbean = new Gson().fromJson(getNewsContent, Newsbean.class);
+            List<Newsbean.ResultDTO.DataDTO> data1 = newsbean.getResult().getData();
+            for (int i = 0; i < data1.size(); i++) {
+                list.add(new NewsEntity(i, data1.get(i).getTitle(), data1.get(i).getThumbnail_pic_s(), data1.get(i).getAuthor_name(), data1.get(i).getDate()));
+            }
+        } catch (Exception e) {
+            list.add(new NewsEntity(0, name, defaultUrl, "xing", new Date().toString()));
+        }
+        NewsAdapter adapter = new NewsAdapter(getActivity(), list);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
