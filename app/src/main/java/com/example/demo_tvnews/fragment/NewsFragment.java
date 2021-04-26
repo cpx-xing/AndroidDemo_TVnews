@@ -49,7 +49,7 @@ public class NewsFragment extends BaseFragment implements AdapterView.OnItemClic
     String head = "http://v.juhe.cn/toutiao/index?type=";
     String key = "&page=&page_size=&key=ab26369c5f61027169bdd1bebb9727ef";
     String url = null;
-    String defaultUrl = "https://desk-fd.zol-img.com.cn/t_s960x600c5/g5/M00/04/0A/ChMkJ1bWVkqIAOIIAATtjMLDO44AAMRawJxKN0ABO2k023.jpg";
+    String defaultUrl = "https://t7.baidu.com/it/u=715017140,34998045&fm=193&f=GIF";
     RecyclerView recyclerView;
     SmartRefreshLayout smartRefreshLayout;
     private String reason = "超过每日可允许请求次数";
@@ -116,6 +116,7 @@ public class NewsFragment extends BaseFragment implements AdapterView.OnItemClic
 //                添加判断：如果取到了数据，保存到数据库中，未取到数据则跳过
                 Log.e("TAG",result.indexOf(reason)+"");
                 if (result.indexOf(reason) == -1) {
+                    showNews(result);
                     NewsContentBean contentBean = new NewsContentBean(name, result);
 //                    如果数据库中有数据，则更新，没有则添加
                     if (DBManager.isFirstData()) {
@@ -136,11 +137,7 @@ public class NewsFragment extends BaseFragment implements AdapterView.OnItemClic
         //        采用存储到数据库的方法--读取数据库中的数据
         try {
             String getNewsContent = DBManager.getNewsContent(name);
-            Newsbean newsbean = new Gson().fromJson(getNewsContent, Newsbean.class);
-            List<Newsbean.ResultDTO.DataDTO> data1 = newsbean.getResult().getData();
-            for (int i = 0; i < data1.size(); i++) {
-                list.add(new NewsEntity(i, data1.get(i).getTitle(), data1.get(i).getThumbnail_pic_s(), data1.get(i).getAuthor_name(), data1.get(i).getDate()));
-            }
+            showNews(getNewsContent);
         } catch (Exception e) {
             list.add(new NewsEntity(0, name, defaultUrl, "xing", new Date().toString()));
         }
@@ -151,5 +148,12 @@ public class NewsFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.e("Click", position + "");
+    }
+    public void showNews(String s){
+        Newsbean newsbean = new Gson().fromJson(s, Newsbean.class);
+        List<Newsbean.ResultDTO.DataDTO> data1 = newsbean.getResult().getData();
+        for (int i = 0; i < data1.size(); i++) {
+            list.add(new NewsEntity(i, data1.get(i).getTitle(), data1.get(i).getThumbnail_pic_s(), data1.get(i).getAuthor_name(), data1.get(i).getDate()));
+        }
     }
 }

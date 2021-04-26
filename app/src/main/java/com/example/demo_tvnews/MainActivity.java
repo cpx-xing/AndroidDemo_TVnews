@@ -11,6 +11,7 @@ import com.example.demo_tvnews.db.DBManager;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     Button loginButton,registerButton;
+    public static int mCurrentIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
