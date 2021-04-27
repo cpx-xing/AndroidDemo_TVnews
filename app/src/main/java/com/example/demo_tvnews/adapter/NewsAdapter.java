@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,16 +18,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.demo_tvnews.OnItemChildClickListener;
+import com.example.demo_tvnews.OnItemClickListener;
 import com.example.demo_tvnews.R;
 import com.example.demo_tvnews.entity.NewsEntity;
 import com.example.demo_tvnews.util.CircleTransform;
 import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 import java.util.zip.Inflater;
 
@@ -36,18 +31,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int GET_DATA_SUCCESS = 1;
     private Context mContext;
     private List<NewsEntity> datas;
-    //    设置监听
-    private View.OnClickListener onClickListener;
-
-    public View.OnClickListener getOnClickListener() {
-        return onClickListener;
-    }
-
-    public void setOnClickListener(View.OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
-    }
-
-
+    private OnItemChildClickListener mOnItemChildClickListener2;
+    private OnItemClickListener mOnItemClickListener2;
     public NewsAdapter(Context mContext, List<NewsEntity> datas) {
         this.datas = datas;
         this.mContext = mContext;
@@ -74,6 +59,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 .into(viewHolder.imageView);
         viewHolder.author.setText(entity.getNewsAuthor());
         viewHolder.time.setText(entity.getNewsTime());
+        viewHolder.mPositon = position;
     }
 
     @Override
@@ -81,11 +67,12 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return datas.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView title;
         private ImageView imageView;
         private TextView author;
         private TextView time;
+        public int mPositon;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -93,12 +80,23 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             imageView = itemView.findViewById(R.id.item_news_img);
             author = itemView.findViewById(R.id.item_news_author);
             time = itemView.findViewById(R.id.item_news_time);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.e("+++++++++++++++++++++++","--------------------------------");
-                }
-            });
+            imageView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            if (v.getId() == R.id.item_news_img){
+                if (mOnItemChildClickListener2 != null) {
+                   mOnItemChildClickListener2.onItemChildClick(mPositon);
+                }
+            }
+        }
+    }
+    public void setOnItemChildClickListener(OnItemChildClickListener onItemChildClickListener) {
+        mOnItemChildClickListener2= onItemChildClickListener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+       mOnItemClickListener2 = onItemClickListener;
     }
 }

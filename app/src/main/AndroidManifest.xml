@@ -12,9 +12,11 @@
         android:roundIcon="@mipmap/tv"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".HomeActivity"
+        <activity android:name=".NewsContentActivity2"></activity>
+        <activity
+            android:name=".HomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity android:name=".BaseActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />

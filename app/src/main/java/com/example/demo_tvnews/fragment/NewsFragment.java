@@ -1,6 +1,7 @@
 package com.example.demo_tvnews.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -17,6 +18,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.example.demo_tvnews.NewsContentActivity2;
+import com.example.demo_tvnews.OnItemChildClickListener;
+import com.example.demo_tvnews.OnItemClickListener;
 import com.example.demo_tvnews.R;
 import com.example.demo_tvnews.adapter.NewsAdapter;
 import com.example.demo_tvnews.db.DBManager;
@@ -43,7 +47,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class NewsFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+public class NewsFragment extends BaseFragment implements OnItemChildClickListener{
 
     private String name;
     String head = "http://v.juhe.cn/toutiao/index?type=";
@@ -114,7 +118,7 @@ public class NewsFragment extends BaseFragment implements AdapterView.OnItemClic
                 String result = response.body().string();
 //                Log.e("TAG", result);
 //                添加判断：如果取到了数据，保存到数据库中，未取到数据则跳过
-                Log.e("TAG",result.indexOf(reason)+"");
+//                Log.e("TAG",result.indexOf(reason)+"");
                 if (result.indexOf(reason) == -1) {
                     showNews(result);
                     NewsContentBean contentBean = new NewsContentBean(name, result);
@@ -142,12 +146,8 @@ public class NewsFragment extends BaseFragment implements AdapterView.OnItemClic
             list.add(new NewsEntity(0, name, defaultUrl, "xing", new Date().toString()));
         }
         NewsAdapter adapter = new NewsAdapter(getActivity(), list);
+        adapter.setOnItemChildClickListener(this);
         recyclerView.setAdapter(adapter);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.e("Click", position + "");
     }
     public void showNews(String s){
         Newsbean newsbean = new Gson().fromJson(s, Newsbean.class);
@@ -155,5 +155,13 @@ public class NewsFragment extends BaseFragment implements AdapterView.OnItemClic
         for (int i = 0; i < data1.size(); i++) {
             list.add(new NewsEntity(i, data1.get(i).getTitle(), data1.get(i).getThumbnail_pic_s(), data1.get(i).getAuthor_name(), data1.get(i).getDate()));
         }
+    }
+    @Override
+    public void onItemChildClick(int position) {
+        Toast.makeText(getContext(),"你点击了第"+position+"项",Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(getContext(), NewsContentActivity2.class);
+        intent.putExtra("url","https://blog.csdn.net/weixin_40438421/article/details/85700109");
+        this.startActivity(intent);
     }
 }

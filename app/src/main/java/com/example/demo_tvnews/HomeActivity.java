@@ -11,6 +11,8 @@ import com.example.demo_tvnews.entity.TabEntity;
 import com.example.demo_tvnews.fragment.CollectFragment;
 import com.example.demo_tvnews.fragment.HomeFragment;
 import com.example.demo_tvnews.fragment.MyFragment;
+import com.example.demo_tvnews.fragment.UserFragment;
+import com.example.demo_tvnews.fragment.ZiXunFragment;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -25,15 +27,15 @@ public class HomeActivity extends AppCompatActivity {
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
 
     //    底部的标签
-    private String[] mTitles = {"首页", "收藏", "我的"};
+    private String[] mTitles = {"首页", "视频", "新闻","资讯","我的"};
     //    为点击时的图案
     private int[] mIconUnselectIds = {
             R.mipmap.home, R.mipmap.message,
-            R.mipmap.mine};
+            R.mipmap.news1,R.mipmap.zixun,R.mipmap.mine};
     //    点击时的图案
     private int[] mIconSelectIds = {
             R.mipmap.home2, R.mipmap.message2,
-            R.mipmap.mine2};
+            R.mipmap.news2,R.mipmap.zixun2,R.mipmap.mine2};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,8 @@ public class HomeActivity extends AppCompatActivity {
         mFragments.add(HomeFragment.newInstance());
         mFragments.add(CollectFragment.newInstance());
         mFragments.add(MyFragment.newInstance());
+        mFragments.add(ZiXunFragment.newInstance());
+        mFragments.add(UserFragment.newInstance());
 
         for (int i = 0; i < mTitles.length; i++) {
             mTabEntities.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnselectIds[i]));

@@ -142,6 +142,7 @@ public class CollectFragment extends Fragment implements OnItemChildClickListene
         smartRefreshLayout = v.findViewById(R.id.smartrefreshLayoutVideo);
         mRecyclerView = v.findViewById(R.id.rv);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
+        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mAdapter = new VideoRecyclerViewAdapter(mVideos, getContext());
         mAdapter.setOnItemChildClickListener(this);
