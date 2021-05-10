@@ -6,6 +6,7 @@ public class NewsEntity {
     private String imageUrl;
     private String newsAuthor;
     private String newsTime;
+    private String newsurl;
 
     public NewsEntity(int idcode, String newsTitle, String imageUrl, String newsAuthor, String newsTime) {
         this.idcode = idcode;
@@ -13,6 +14,23 @@ public class NewsEntity {
         this.imageUrl = imageUrl;
         this.newsAuthor = newsAuthor;
         this.newsTime = newsTime;
+    }
+
+    public NewsEntity(int idcode, String newsTitle, String imageUrl, String newsAuthor, String newsTime, String newsurl) {
+        this.idcode = idcode;
+        this.newsTitle = newsTitle;
+        this.imageUrl = imageUrl;
+        this.newsAuthor = newsAuthor;
+        this.newsTime = newsTime;
+        this.newsurl = newsurl;
+    }
+
+    public String getNewsurl() {
+        return newsurl;
+    }
+
+    public void setNewsurl(String newsurl) {
+        this.newsurl = newsurl;
     }
 
     public int getIdcode() {

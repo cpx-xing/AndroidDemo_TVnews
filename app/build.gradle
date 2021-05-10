@@ -63,4 +63,7 @@ dependencies {
     implementation 'com.github.dueeeke.dkplayer:player-exo:3.2.6'
     implementation 'com.github.dueeeke.dkplayer:player-ijk:3.2.6'
     implementation 'com.github.dueeeke.dkplayer:videocache:3.2.6'
+
+//    添加api依赖
+//    implementation 'com.baidubce:api-explorer-sdk:1.0.0'
 }

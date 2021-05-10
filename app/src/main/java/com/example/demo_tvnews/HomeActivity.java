@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.example.demo_tvnews.adapter.MyPagerAdapter;
 import com.example.demo_tvnews.entity.TabEntity;
 import com.example.demo_tvnews.fragment.CollectFragment;
+import com.example.demo_tvnews.fragment.FirstFragment;
 import com.example.demo_tvnews.fragment.HomeFragment;
 import com.example.demo_tvnews.fragment.MyFragment;
 import com.example.demo_tvnews.fragment.UserFragment;
@@ -27,15 +28,23 @@ public class HomeActivity extends AppCompatActivity {
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
 
     //    底部的标签
-    private String[] mTitles = {"首页", "视频", "新闻","资讯","我的"};
+//    private String[] mTitles = {"首页", "视频", "新闻","资讯","我的"};
+    private String[] mTitles = {"首页", "视频", "新闻","我的"};
     //    为点击时的图案
+//    private int[] mIconUnselectIds = {
+//            R.mipmap.home, R.mipmap.message,
+//            R.mipmap.news1,R.mipmap.zixun,R.mipmap.mine};
+//    //    点击时的图案
+//    private int[] mIconSelectIds = {
+//            R.mipmap.home2, R.mipmap.message2,
+//            R.mipmap.news2,R.mipmap.zixun2,R.mipmap.mine2};
     private int[] mIconUnselectIds = {
             R.mipmap.home, R.mipmap.message,
-            R.mipmap.news1,R.mipmap.zixun,R.mipmap.mine};
+            R.mipmap.news1,R.mipmap.mine};
     //    点击时的图案
     private int[] mIconSelectIds = {
             R.mipmap.home2, R.mipmap.message2,
-            R.mipmap.news2,R.mipmap.zixun2,R.mipmap.mine2};
+            R.mipmap.news2,R.mipmap.mine2};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +53,11 @@ public class HomeActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewpager);
         commonTabLayout = findViewById(R.id.commonTabLayout);
 
-        mFragments.add(HomeFragment.newInstance());
+//        mFragments.add(HomeFragment.newInstance());
+        mFragments.add(FirstFragment.newInstance());
         mFragments.add(CollectFragment.newInstance());
         mFragments.add(MyFragment.newInstance());
-        mFragments.add(ZiXunFragment.newInstance());
+//        mFragments.add(ZiXunFragment.newInstance());
         mFragments.add(UserFragment.newInstance());
 
         for (int i = 0; i < mTitles.length; i++) {

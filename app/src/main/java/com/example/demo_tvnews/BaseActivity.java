@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ public class BaseActivity extends AppCompatActivity {
         Intent in = new Intent(mContext,cls);
         startActivity(in);
     }
+
 
 
 }

@@ -47,7 +47,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class NewsFragment extends BaseFragment implements OnItemChildClickListener{
+public class NewsFragment extends BaseFragment implements OnItemChildClickListener {
 
     private String name;
     String head = "http://v.juhe.cn/toutiao/index?type=";
@@ -143,25 +143,26 @@ public class NewsFragment extends BaseFragment implements OnItemChildClickListen
             String getNewsContent = DBManager.getNewsContent(name);
             showNews(getNewsContent);
         } catch (Exception e) {
-            list.add(new NewsEntity(0, name, defaultUrl, "xing", new Date().toString()));
+//            list.add(new NewsEntity(0, name, defaultUrl, "xing", new Date().toString()));
         }
         NewsAdapter adapter = new NewsAdapter(getActivity(), list);
         adapter.setOnItemChildClickListener(this);
         recyclerView.setAdapter(adapter);
     }
-    public void showNews(String s){
+
+    public void showNews(String s) {
         Newsbean newsbean = new Gson().fromJson(s, Newsbean.class);
         List<Newsbean.ResultDTO.DataDTO> data1 = newsbean.getResult().getData();
         for (int i = 0; i < data1.size(); i++) {
             list.add(new NewsEntity(i, data1.get(i).getTitle(), data1.get(i).getThumbnail_pic_s(), data1.get(i).getAuthor_name(), data1.get(i).getDate()));
         }
     }
+
     @Override
     public void onItemChildClick(int position) {
-        Toast.makeText(getContext(),"你点击了第"+position+"项",Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(getContext(), "你点击了第" + position + "项", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getContext(), NewsContentActivity2.class);
-        intent.putExtra("url","https://blog.csdn.net/weixin_40438421/article/details/85700109");
+        intent.putExtra("url", "https://blog.csdn.net/weixin_40438421/article/details/85700109");
         this.startActivity(intent);
     }
 }
