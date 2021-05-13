@@ -84,15 +84,39 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
-
+    <com.youth.banner.Banner
+        android:layout_marginTop="15dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
+<Button
+    android:layout_marginTop="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="@drawable/shape_big_login_btn"
+    android:text="获取当前位置"
+    android:textSize="16sp"
+    android:id="@+id/locationBtn"/>
 
     <TextView
+        android:layout_marginTop="20dp"
         android:id="@+id/apibody"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/hello_blank_fragment"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:layout_marginTop="50dp"
+        android:id="@+id/locationText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="当前位置信息"
         android:textColor="@color/black" />
 
 </LinearLayout>
