@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.widget.Toast;
 
 import com.example.demo_tvnews.adapter.MyPagerAdapter;
 import com.example.demo_tvnews.entity.TabEntity;
@@ -20,7 +23,11 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
+
+    //设置时间间隔和上次退出时间
+    private static final long TIME=2000;
+    private long exitTime;
 
     private ViewPager viewPager;
     private CommonTabLayout commonTabLayout;
@@ -94,5 +101,37 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager(),mTitles,mFragments));
+    }
+
+    //重写onKeyDown方法
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //判断是否按的后退键，而且按了一次
+        if(keyCode==KeyEvent.KEYCODE_BACK&&event.getRepeatCount()==0)
+        {
+            //获取当前的系统时间，和exitTime相减，判断两次间隔是否大于规定时间
+            //exitTime没有初始值则默认为0
+            //如果大于设定的时间，则弹出提示，同时把exitTime设置为当前时间
+            if(System.currentTimeMillis()-exitTime>TIME)
+            {
+                Toast.makeText(this,"再按一次退出程序",Toast.LENGTH_LONG).show();
+                exitTime= System.currentTimeMillis();
+            }
+            else
+            {
+                //如果再次按后退的时间小于规定时间，则退出
+                //启动MainActivity
+                Intent intentActivity = new Intent();
+                intentActivity.setClass(getApplicationContext(),MainActivity.class);
+                startActivity(intentActivity);
+
+                Intent intentBroadcast = new Intent();
+                intentBroadcast.setAction("action.exit.MainActivity");
+                sendBroadcast(intentBroadcast);
+            }
+            //消费事件
+            return true;
+        }
+        //不处理事件
+        return false;
     }
 }

@@ -2,6 +2,7 @@ package com.example.demo_tvnews.fragment;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -25,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.demo_tvnews.FilpperActivity2;
 import com.example.demo_tvnews.MainActivity;
 import com.example.demo_tvnews.R;
 import com.example.demo_tvnews.adapter.ImageBannerAdapter;
@@ -72,6 +74,7 @@ public class FirstFragment extends BaseFragment implements View.OnClickListener 
     double latitude;
     String jingdu;
     String weidu;
+    Button showBtn;
 
     public FirstFragment() {
         // Required empty public constructor
@@ -110,6 +113,7 @@ public class FirstFragment extends BaseFragment implements View.OnClickListener 
         weather_aqi = view.findViewById(R.id.weather_aqi);
         banner = view.findViewById(R.id.banner);
         apibody = view.findViewById(R.id.apibody);
+        showBtn = view.findViewById(R.id.showbtn);
 //        String test = "http://apis.juhe.cn/simpleWeather/query?city=杭州&key=511dfd17bf4b6ebe6181637e99d0ac97";
         weather_url = "http://apis.juhe.cn/simpleWeather/query?city=%E6%9D%AD%E5%B7%9E&key=511dfd17bf4b6ebe6181637e99d0ac97";
         getWeather(weather_url);
@@ -118,6 +122,7 @@ public class FirstFragment extends BaseFragment implements View.OnClickListener 
         cardView = view.findViewById(R.id.weather_card);
         cardView.setOnClickListener(this);
         locationBtn.setOnClickListener(this);
+        showBtn.setOnClickListener(this);
 
 //        给banner添加数据
         adapter = new ImageBannerAdapter(DataBean.getTestData2(), getContext());
@@ -141,6 +146,10 @@ public class FirstFragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.locationBtn:
                 getLoation();
+                break;
+            case R.id.showbtn:
+                Intent intent = new Intent(getContext(),FilpperActivity2.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -262,6 +271,5 @@ public class FirstFragment extends BaseFragment implements View.OnClickListener 
     public void test(String s) {
         locationBtn.setText(s);
     }
-
 
 }

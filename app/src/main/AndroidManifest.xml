@@ -2,10 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.demo_tvnews">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 这个权限用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 这个权限用于访问GPS定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -16,7 +14,8 @@
         android:roundIcon="@mipmap/tv"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".NewsContentActivity2"></activity>
+        <activity android:name=".FilpperActivity2"></activity>
+        <activity android:name=".NewsContentActivity2" />
         <activity
             android:name=".HomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -24,7 +23,9 @@
         <activity android:name=".BaseActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

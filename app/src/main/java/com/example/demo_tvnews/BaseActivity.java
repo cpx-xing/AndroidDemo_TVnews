@@ -11,10 +11,16 @@ import android.widget.Toast;
 public class BaseActivity extends AppCompatActivity {
 
     private Context mContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+
+
+
+
+
     }
 
     public void showToast(String string){
